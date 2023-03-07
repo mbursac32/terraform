@@ -12,7 +12,6 @@ env:
  AWS_REGION: ${{ secrets.AWS_REGION }}
  BUCKET_TF_STATE: ${{ secrets.BUCKET_TF_STATE}}
  RELEASE_VERSION: nodejs_demo_image
- ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
  ECR_REPOSITORY: marko-test
 
 jobs:
@@ -63,9 +62,8 @@ jobs:
 
     - name: Build, tag, and push image to Amazon ECR
       working-directory: source-code
-     # env:
-      #  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-       # ECR_REPOSITORY: marko-test
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       run: |
         docker build . --file Dockerfile --tag $ECR_REGISTRY/$ECR_REPOSITORY:$RELEASE_VERSION 
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$RELEASE_VERSION
