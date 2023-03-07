@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check out code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
     
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -23,16 +23,12 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: ls 
-      run: |
-        ls 
-        ls source-code
-        cat source-code/Dockerfile
-
     - name: Build, tag, and push image to Amazon ECR
+      working-directory: source-code
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: marko-test
         IMAGE_TAG: nodejs_demo_image
       run: |
-        docker build . --file source-code/Dockerfile --tag test:tag
+        docker build . --file Dockerfile --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG 
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG

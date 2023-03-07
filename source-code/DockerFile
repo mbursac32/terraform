@@ -17,5 +17,6 @@ COPY ./ .
 # Expose the port
 EXPOSE 3000
 
+
 # Command to run app when intantiate an image
 CMD ["npm","start"]
