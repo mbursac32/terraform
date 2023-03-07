@@ -1,6 +1,9 @@
 name: marko-test
 
 on:
+ push:
+   branches:
+   - main
 
 env:
  TF_LOG: INFO
@@ -42,6 +45,7 @@ jobs:
 
   build:
     name: Build and Push Image
+    needs: terraform
     runs-on: ubuntu-latest
     steps:
     - name: Check out code
