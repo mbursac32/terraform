@@ -1,16 +1,16 @@
 variable "sg_name" {
-  type        = string
-  default     = "ecs-container-sg"
+  type    = string
+  default = "ecs-container-sg"
 }
 
 variable "vpc_id" {
-  type        = string
-  default     = ""
+  type    = string
+  default = ""
 }
 
 variable "security_groups" {
-  type        = list
-  default     = []
+  type    = list(any)
+  default = []
 }
 
 variable "tags" {
@@ -20,66 +20,70 @@ variable "tags" {
 }
 
 variable "cluster_name" {
-  type        = string
-  default     = "marko-ecs-test"
+  type    = string
+  default = "marko-ecs-test"
 }
 
 variable "family" {
-  type        = string
-  default     = "marko-task-definition"
+  type    = string
+  default = "marko-task-definition"
 }
 
 variable "execution_role_arn" {
-  type        = string
-  default     = ""
+  type    = string
+  default = ""
 }
 
 variable "task_definition_name" {
-  type        = string
-  default     = "marko-task-definition"
+  type    = string
+  default = "marko-task-definition"
 }
 
 variable "image_name" {
-  type        = string
-  default     = ""
+  type    = string
+  default = ""
 }
 
 variable "essential" {
-  type        = bool
-  default     = false
+  type    = bool
+  default = false
 }
 
 variable "containerPort" {
-  type        = number
-  default     = 3000
+  type    = number
+  default = 3000
 }
 
 variable "requires_compatibilities" {
-  type        = list
-  default     = ["EC2"]
+  type    = list(any)
+  default = ["EC2"]
 }
 
 variable "service_name" {
-  type        = string
-  default     = "marko-test-service"
+  type    = string
+  default = "marko-test-service"
 }
 
 variable "desired_count" {
-  type        = number
-  default     = 2
+  type    = number
+  default = 2
 }
 
 variable "launch_type" {
-  type        = string
-  default     = "EC2"
+  type    = string
+  default = "EC2"
 }
 
 variable "target_group_arn" {
-  type        = string
-  default     = ""
+  type    = string
+  default = ""
 }
 
 variable "subnets" {
-  type        = list
-  default     = []
+  type    = list(any)
+  default = []
+}
+
+variable "release_version" {
+  type    = string
 }

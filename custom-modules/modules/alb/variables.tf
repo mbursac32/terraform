@@ -1,26 +1,26 @@
 variable "name" {
-  type        = string
-  default     = "lb"
+  type    = string
+  default = "lb"
 }
 
 variable "internal" {
-  type        = bool
-  default     = false
+  type    = bool
+  default = false
 }
 
 variable "load_balancer_type" {
-  type        = string
-  default     = "application"
+  type    = string
+  default = "application"
 }
 
 variable "vpc_id" {
-  type        = string
-  default     = ""
+  type    = string
+  default = ""
 }
 
 variable "subnets" {
-  type        = list
-  default     = []
+  type    = list(any)
+  default = []
 }
 
 variable "tags" {

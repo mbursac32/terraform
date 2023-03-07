@@ -33,7 +33,7 @@ resource "aws_security_group" "allow_http_lb" {
   }
 
 
- tags = var.tags
+  tags = var.tags
 }
 
 resource "aws_lb_listener" "lb_listener" {
@@ -61,6 +61,6 @@ resource "aws_lb_target_group" "lb_tg" {
     timeout  = 2
   }
 
- tags = var.tags
+  tags = var.tags
 }
 

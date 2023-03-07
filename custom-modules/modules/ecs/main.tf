@@ -20,7 +20,7 @@ resource "aws_security_group" "ecs_container" {
   }
 
   tags = var.tags
-  
+
 }
 
 resource "aws_ecs_cluster" "cluster" {
@@ -33,8 +33,8 @@ resource "aws_ecs_cluster" "cluster" {
 }
 
 resource "aws_ecs_task_definition" "ecs" {
-  count = var.release_version != "" ? 1 : 0
-  family = var.family
+  count              = var.release_version != "" ? 1 : 0
+  family             = var.family
   execution_role_arn = var.execution_role_arn
   container_definitions = jsonencode([
     {
@@ -57,8 +57,8 @@ resource "aws_ecs_task_definition" "ecs" {
   memory       = "512"
 }
 
-resource "aws_ecs_service" "hello" {
-  count = var.release_version != "" ? 1 : 0
+resource "aws_ecs_service" "ecs" {
+  count           = var.release_version != "" ? 1 : 0
   name            = var.service_name
   cluster         = aws_ecs_cluster.cluster.id
   task_definition = aws_ecs_task_definition.ecs[0].arn
@@ -67,7 +67,7 @@ resource "aws_ecs_service" "hello" {
 
   load_balancer {
     target_group_arn = var.target_group_arn
-    container_name   = jsondecode(aws_ecs_task_definition.hello[0].container_definitions)[0].name
+    container_name   = jsondecode(aws_ecs_task_definition.ecs[0].container_definitions)[0].name
     container_port   = var.containerPort
   }
 

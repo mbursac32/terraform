@@ -11,7 +11,7 @@ resource "aws_vpc" "ecs" {
 
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.ecs.id
-  tags = var.tags
+  tags   = var.tags
 }
 
 resource "aws_route_table" "public_custom_route_table" {
@@ -36,7 +36,7 @@ resource "aws_subnet" "public" {
 }
 
 resource "aws_route_table_association" "public_crt_public_subnet" {
-  count = length(var.public_subnet_cidr_blocks)
+  count          = length(var.public_subnet_cidr_blocks)
   subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.public_custom_route_table.id
 }

@@ -35,14 +35,18 @@ module "alb" {
 module "ecs" {
   source = "../../../modules/ecs"
 
-  vpc_id             = module.vpc.vpc_id
-  subnets            = module.vpc.public_subnet_ids
-  security_groups    = [module.alb.sg_id]
-  execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
-  image_name         = module.ecr.repository_url
-  desired_count      = 5
-  target_group_arn   = module.alb.target_arn
-
+  vpc_id                   = module.vpc.vpc_id
+  subnets                  = module.vpc.public_subnet_ids
+  security_groups          = [module.alb.sg_id]
+  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  image_name               = module.ecr.repository_url
+  desired_count            = 5
+  target_group_arn         = module.alb.target_arn
+  requires_compatibilities = ["FARGATE"]
+  launch_type              = "FARGATE"
+  essential                = true
+  release_version          = var.release_version
+  
   tags = {
     Name = "marko-ecs-test"
     Env  = "staging"

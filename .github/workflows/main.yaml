@@ -1,11 +1,45 @@
 name: marko-test
 
 on:
-  push:
-    branches:
-      - 'main'
+
+env:
+ TF_LOG: INFO
+ AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+ AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+ BUCKET_TF_STATE: ${{ secrets.BUCKET_TF_STATE}}
+ RELEASE_VERSION: nodejs_demo_image
 
 jobs:
+  terraform:
+    name: Run Terraform
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./custom-modules/accounts/staging/ecs
+    steps:
+    - uses: actions/checkout@v2
+    - uses: hashicorp/setup-terraform@v2
+
+    - name: Setup Terraform with specified version on the runner
+      with:
+        terraform_version: 1.3.0
+
+    - name: Terraform init
+      id: init
+      run: terraform init -backend-config="bucket=$BUCKET_TF_STATE"    
+
+    - name: Terraform format
+      id: fmt
+      run: terraform fmt -check
+    
+    - name: Terraform validate
+      id: validate
+      run: terraform validate  
+    
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -input=false -var release_version="$RELEASE_VERSION"
+
   build:
     name: Build and Push Image
     runs-on: ubuntu-latest
@@ -18,7 +52,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-west-1
+        aws-region: us-east-1
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
