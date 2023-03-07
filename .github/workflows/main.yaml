@@ -24,10 +24,9 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v1
 
     - name: Build, tag, and push image to Amazon ECR
-      working-directory: source-code
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: marko-test
         IMAGE_TAG: nodejs_demo_image
       run: |
-        docker build . --file Dockerfile --tag test:tag
+        docker build . --file source-code/Dockerfile --tag test:tag
