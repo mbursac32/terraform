@@ -11,11 +11,11 @@ dependency "vpc" {
 }
 
 inputs = {
-  name                = "ecs-asg"
+  name                = "rds-sg"
   description         = "Autoscaling group security group"
   vpc_id              = dependency.vpc.outputs.vpc_id
-  ingress_cidr_blocks = ["0.0.0.0/0"]
-  ingress_rules       = ["http-80-tcp"]
+  ingress_cidr_blocks = [dependency.vpc.outputs.vpc_cidr_block]
+  ingress_rules       = ["mysql-tcp"]
 
   egress_rules = ["all-all"]
 

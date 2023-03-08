@@ -13,13 +13,14 @@ dependency "vpc" {
 dependency "asg" {
   config_path = "../asg"
   mock_outputs = {
-    autoscaling_group_arn  = "arn:aws:autoscaling:eu-west-1:111111111111:autoScalingGroup:ce1dbda2-e91b-43db-8690-a575efbbc6cc:autoScalingGroupName/mock"
+    autoscaling_group_arn = "arn:aws:autoscaling:eu-west-1:111111111111:autoScalingGroup:ce1dbda2-e91b-43db-8690-a575efbbc6cc:autoScalingGroupName/mock"
   }
 }
 
 inputs = {
-  
+
   cluster_name = "marko-ecs-test"
+
   cluster_configuration = {
     execute_command_configuration = {
       logging = "OVERRIDE"
@@ -52,7 +53,7 @@ inputs = {
   }
 
   tags = {
-    Terraform = "true"
+    Terraform   = "true"
     Environment = "staging"
   }
 

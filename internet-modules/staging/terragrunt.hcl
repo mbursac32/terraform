@@ -7,7 +7,7 @@ remote_state {
   config = {
     bucket = "markob-test-tf-state"
 
-    key = "${path_relative_to_include()}/terraform.tfstate"
+    key            = "${path_relative_to_include()}/terraform.tfstate"
     region         = "eu-west-1"
     encrypt        = true
     dynamodb_table = "test-lock-table"
@@ -15,9 +15,9 @@ remote_state {
 }
 
 generate "provider" {
-  path = "provider.tf"
+  path      = "provider.tf"
   if_exists = "overwrite_terragrunt"
-  contents = <<EOF
+  contents  = <<EOF
 provider "aws" {}
 EOF
 }
